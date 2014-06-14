@@ -1,0 +1,125 @@
+<html>
+<head>
+<title> Simple text editor </title>
+<style>
+#text_edit {
+ width: 500px;
+ height: 300px;}
+#view_text {
+width: 500px;
+}
+#qwerty{
+{width: 20px;
+ height:30px;
+}
+#container
+{height :70px;
+width : 100px;
+}
+</style>
+<script language="javascript">
+function Bold()
+{
+var textarea = document.getElementById("text_edit");
+var begin = textarea.value.substr(0, textarea.selectionstart);
+var selected = textarea.value.substr(textarea.selectionstart, textarea.selectionend - textarea.selectionstart);
+var end = textarea.value.substr(textarea.selectionend);
+textarea.value = begin + '[b]' + selected + '[/b]' + end;
+}
+function Italics()
+{
+var textarea = document.getElementById("text_edit");
+var begin = textarea.value.substr(0, textarea.selectionstart);
+var selected = textarea.value.substr(textarea.selectionstart, textarea.selectionend - textarea.selectionstart);
+var end = textarea.value.substr(textarea.selectionend);
+textarea.value = begin + '[i]' + selected + '[/i]' + end;
+}
+function Underline()
+{
+var textarea = document.getElementById("text_edit");
+var begin = textarea.value.substr(0, textarea.selectionstart);
+var selected = textarea.value.substr(textarea.selectionstart, textarea.selectionend - textarea.selectionstart);
+var end = textarea.value.substr(textarea.selectionend);
+textarea.value = begin + '[u]' + selected + '[/u]' + end;}
+
+function Dold()
+{
+var textArea = document.getElementById("text_edit");
+var begin = textArea.value.substr(0, textArea.selectionstart);
+var selected = textArea.value.substr(textArea.selectionstart, textArea.selectionend - textArea.selectionstart);
+var end = textArea.value.substr(textArea.selectionend);
+var final="";
+for (i=0;i<l;i+=2)
+final+=selected.charAt(i).toUpperCase() + selected.charAt(i+1).toLowerCase();
+textarea.value = begin + '[b]' + final + '[/b]' + end;
+}
+function Ditalics()
+{
+var textArea = document.getElementById("text_edit");
+var begin = textArea.value.substr(0, textArea.selectionstart);
+var selected = textArea.value.substr(textArea.selectionstart, textArea.selectionend - textArea.selectionstart);
+var end = textArea.value.substr(textArea.selectionend);
+var final="";
+for (i=0;i<l;i+=2)
+final+=selected.charAt(i).toUpperCase() + selected.charAt(i+1).toLowerCase();
+textarea.value = begin + '[i]' + final + '[/i]' + end;
+}
+function Para()
+{
+var textArea = document.getElementById("text_edit");
+var begin = textarea.value.substr(0, textarea.selectionstart);
+ var selected = textarea.value.substr(textarea.selectionstart, textarea.selectionend - textarea.selectionstart);
+var end = textarea.value.substr(textArea.selectionend);
+textArea.value = begin + '[u]' + selected + '[/u]' + end;}
+var colour= document.getElementById('color').value;
+
+function Colour(colour)
+{
+var textarea = document.getElementById("text_edit");
+var l = textarea.value.length;
+var start = textarea.selectionStart;
+var stop = textarea.selectionEnd;
+var selected = textarea.value.substring(start,stop);
+var replace = '[color:'+colour+']' + selected + '[/color]';
+textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,l);
+}
+ function view_text ()
+ {
+var textArea = document.getElementById("text_edit");
+var xyz = document.getElementById("view_text");
+var A = textArea.value;
+<!--Unusable html tags are made--!>
+A= text.replace(/\</gi, "<");
+text= text.replace(/\>/gi, ">");
+<!--Replacing \n by break--!>
+A= A.replace(/\n/gi, "<br />")
+A = A.replace(/\[b\]/gi, "<b>");
+A = A.replace(/\[\/b\]/gi, "</b>");
+A = A.replace(/\[i\]/gi, "<i>");
+A = A.replace(/\[\/i\]/gi, "</i>");	             
+A = A.replace(/\[u\]/gi, "<u>");
+A = A.replace(/\[\/u\]/gi, "</u>");
+A = A.replace(/\[p\]/gi, "<p>");
+A = A.replace(/\[\/p\]/gi, "</p>");	             
+xyz.innerHTML = A;
+}
+</script>
+<body bgcolor="Pink">
+Click choices after entering text
+<div id="qwerty">
+<input type="button" onclick="Bold()" >BOLD </input><BR/>
+<input type="button" onclick="Italics()" value="italics">ITALICS </input><BR/>
+<input type="checkbox" onclick="Underline()" name="check"> UNDERLINE</input><BR/>
+<input type="checkbox" onclick="para()" name="check">PARAGRAPH</input><BR/>
+<input type="checkbox" onclick="Dold()" name="check">DOLD <input><BR/>
+<input type="checkbox" onclick="Ditalics()" name="check">DITALICS<input> <BR/>
+<input type="color" id='color'>
+<input type="button" onclick="Colour(colour)" value="CHOOSE COLOUR">
+</div>
+<div id="container">
+<input type="textArea" Row="20" Cols="25" id='text_edit' placeholder="Enter data here"> </TextArea>
+ <input type="button" value="Submit" onclick="view_text()"> 
+</div>
+<div id="view_text"> </div>
+</body>
+</html>
