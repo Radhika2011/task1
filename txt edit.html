@@ -1,90 +1,70 @@
 
 <html>
 <head>
-<title> Simple text editor </title>
+<title>editor</title>
+<style>
+.editor{width:500px;height:300px;resize:none}
+#preview{width:500px}
+</style>
 <script language="javascript">
-var textarea = document.getElementById("text_edit");
-var len=textarea.length;
-var start=textarea.selectionStart;
-var stop=textarea.selectionEnd;
-var selected=textarea.substring(start,stop);
-var colour=document.getElementById("color").value;
-function Bold()
-{
-var replace = '[b]' + selected + '[/b]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
-function Italics()
-{
-var replace = '[i]' + selected + '[/i]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
-function Underline()
-{
-var replace = '[u]' + selected + '[/u]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
+function preview()
+{var colour=document.getElementById('color');
+var textArea=document.getElementById('my_text');
+var div=document.getElementById('preview');
+var text=textArea.value;
+text=text.replace(/\</gi,"<");
+text=text.replace(/\>/gi,">");
+text=text.replace(/\n/gi,'<br>');
+text=text.replace(/\[b\]/gi,"<b>");
+text=text.replace(/\[\/b\]/gi,"</b>");
+text=text.replace(/\[i\]/gi,"<i>");
+text=text.replace(/\[\/i\]/gi,"</i>");
+text=text.replace(/\[u\]/gi,"<u>");
+text=text.replace(/\[\/u\]/gi,"</u>");
+text=text.replace(/\[p\]/gi,"<p>");
+text=text.replace(/\[\/p\]/gi,"</p>");
+text = text.replace(/\[color:colour\]/gi,"<font color=colour.value>);
+text = text.replace(/\[\/color\]/gi,"</font>");
+div.innerHTML=text;}
+function Onselection(val1,val2)
+{var textArea=document.getElementById('my_text');
+if(typeof(textArea.selectionStart)!="undefined")
+{var begin=textArea.value.substr(0,textArea.selectionStart);
+var selection=textArea.value.substr(textArea.selectionStart,textArea.selectionEnd-textArea.selectionStart);
+var end=textArea.value.substr(textArea.selectionEnd);
+textArea.value=begin+val1+selection+val2+end;}}
 
-function Dold()
-{
+function Dselection(val1,val2)
+{var textArea=document.getElementById('my_text');
+if(typeof(textArea.selectionStart)!="undefined")
+{var len=textArea.length;
+var begin=textArea.value.substr(0,textArea.selectionStart);
+var selected=textArea.value.substr(textArea.selectionStart,textArea.selectionEnd-textArea.selectionStart);
+var end=textArea.value.substr(textArea.selectionEnd);
 var final="";
 for (int i=0;i<len;i+=2)
 final+=selected.charAt(i).toUpperCase() + selected.charAt(i+1).toLowerCase();
-var replace = '[b]' + final+ '[/b]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
-function Ditalics()
-{
-var final="";
-for (int i=0;i<len;i+=2)
-final+=selected.charAt(i).toUpperCase() + selected.charAt(i+1).toLowerCase();
-var replace = '[i]' + final + '[/i]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
-function Para()
-{
-var replace = '[p]' + selected + '[/p]' ;
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
-function Colour()
-{
-var replace = '[color:'+colour+']' + selected + '[/color]';
-textarea.value =  textarea.value.substring(0,start) + replace + textarea.value.substring(stop,len);
-}
- function view()
- {
-var textArea = document.getElementById("text_edit");
-var view_text= document.getElementById("view_text");
-var x=textArea.value;  
-x = x.replace(/\</g, "<");//disabling use of html tags
-x = x.replace(/\>/g, ">");
-x = x.replace(/\n/g,"<br>"); //converting \n to break
-x = x.replace(/[b]/g,"<b>");
-x = x.replace(/[\/b]/g,"</b>");
-x = x.replace(/[i]/g,"<i>");
-x = x.replace(/[\/i]/g,"</i>");
-x = x.replace(/[u]/g,"<u>");
-x = x.replace(/[\/u]/g,"</u>");
-x = x.replace(/[p]/g,"<p>");
-x = x.replace(/[\/p]/g,"</p>");
-x = x.replace(/[color:colour]/g,"<font color="colour">);
-x = x.replace(/[\/color]/g,"</font>");
-view_text.innerHTML = x;
-alert(x);
-}
+textArea.value=begin+val1+final+val2+end;}}
+function COLOUR()
+{var colour=document.getElementById('color');
+Onselection('[color:'+colour+']','[/color]');}
 </script>
-<body bgcolor="Pink">
-<hr>
-Click choices after entering text<br/><hr>
-<input type="checkbox" onclick="Bold()" >BOLD </input><BR/>
-<input type="checkbox" onclick="Italics()">ITALICS </input><BR/>
-<input type="checkbox" onclick="Underline()" name="check"> UNDERLINE</input><BR/>
-<input type="checkbox" onclick="Para()" name="check">PARAGRAPH</input><BR/>
-<input type="checkbox" onclick="Dold()" name="check">DOLD </input><BR/>
-<input type="checkbox" onclick="Ditalics()" name="check">DITALICS</input> <BR/>
-Choose colour: <input type="color" id='color'><hr>
-<div id="xyz" style="height:300px;width:300px">
-<input type="textArea" Row="20" Cols="25" id='text_edit' placeholder="Enter data here" style="height:100px;width:200px"> </textArea></div><br/>
- <input type="button" value="Submit" onclick="view()"> 
-<div id="view_text" style="margin-top:20px; height:100px; width:200px;"> </div>
+	
+</head>	
+<body>
+<input type="button" value="Bold" onclick="Onselection('[b]','[/b]')"/>
+<input type="button" value="Italics" onclick="Onselection('[i]','[/i]')"/>
+<input type="button" value="Underline" onclick="Onselection('[u]','[/u]')"/>
+<input type="button" value="Paragraph" onclick="Onselection('[p]','[/p]')"/>
+<input type="button" value="Dold" onclick="Dselection('[b]','[/b]')"/>
+<input type="button" value="Ditalics" onclick="Dselection('[i]','[/i]')"/>
+Choose colour: <input type="color" id='color'>
+<input type="button" value="Setcolor" onclick="COLOUR()"/>
+<br/>
+<textarea class="editor" id="my_text" rows=20 cols=10></textarea>
+<br/>
+<input type="button" value="Show text" onclick="preview()"/>
+<div id="preview">
+</div>
 </body>
 </html>
