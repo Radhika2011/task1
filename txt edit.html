@@ -23,7 +23,7 @@ text=text.replace(/\[u\]/gi,"<u>");
 text=text.replace(/\[\/u\]/gi,"</u>");
 text=text.replace(/\[p\]/gi,"<p>");
 text=text.replace(/\[\/p\]/gi,"</p>");
-text = text.replace(/\[color:colour\]/gi,"<font color=colour.value>");
+text = text.replace(/\[color:colour.value\]/gi,"<font color=colour.value>");
 text = text.replace(/\[\/color\]/gi,"</font>");
 div.innerHTML=text;}
 function Onselection(val1,val2)
@@ -47,7 +47,7 @@ final+=selected.charAt(i).toUpperCase() + selected.charAt(i+1).toLowerCase();
 textArea.value=begin+val1+final+val2+end;}}
 function COLOUR()
 {var colour=document.getElementById('color');
-Onselection('[color:'+colour+']','[/color]');}
+Onselection('[color:'+colour.value+']','[/color]');}
 </script>
 	
 </head>	
